@@ -1,6 +1,6 @@
-# Webpack Hot Server Middleware [![Build Status](https://travis-ci.org/60frames/webpack-hot-server-middleware.svg?branch=master)](https://travis-ci.org/60frames/webpack-hot-server-middleware) [![npm version](https://badge.fury.io/js/webpack-hot-server-middleware.svg)](https://badge.fury.io/js/webpack-hot-server-middleware) [![Coverage Status](https://coveralls.io/repos/github/60frames/webpack-hot-server-middleware/badge.svg?branch=master)](https://coveralls.io/github/60frames/webpack-hot-server-middleware?branch=master)
+# Webpack  Server Middleware [![Build Status](https://travis-ci.org/faceyspacey/webpack-server-middleware.svg?branch=master)](https://travis-ci.org/faceyspacey/webpack-server-middleware) [![npm version](https://badge.fury.io/js/webpack-server-middleware.svg)](https://badge.fury.io/js/webpack-server-middleware) 
 
-Webpack Hot Server Middleware is designed to be used in conjunction with [`webpack-dev-middleware`](https://github.com/webpack/webpack-dev-middleware/) (and optionally [`webpack-hot-middleware`](https://github.com/glenjamin/webpack-hot-middleware/)) to hot update Webpack bundles on the server.
+Webpack Server Middleware is designed to be used in conjunction with [`webpack-dev-middleware`](https://github.com/webpack/webpack-dev-middleware/) (and optionally [`webpack-hot-middleware`](https://github.com/glenjamin/webpack-hot-middleware/)) to hot update Webpack bundles on the server.
 
 ## Why?
 
@@ -94,14 +94,14 @@ It then needs to be mounted immediately after `webpack-dev-middleware`, e.g.
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+const webpackServerMiddleware = require('webpack-server-middleware');
 const config = require('./webpack.config.js');
 const app = express();
 
 const compiler = webpack(config);
 
 app.use(webpackDevMiddleware(compiler));
-app.use(webpackHotServerMiddleware(compiler));
+app.use(webpackServerMiddleware(compiler));
 
 app.listen(6060);
 ```
@@ -121,7 +121,7 @@ const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+const webpackServerMiddleware = require('webpack-server-middleware');
 const config = require('./webpack.config.js');
 const app = express();
 
@@ -130,7 +130,7 @@ const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler));
 // NOTE: Only the client bundle needs to be passed to `webpack-hot-middleware`.
 app.use(webpackHotMiddleware(compiler.compilers.find(compiler => compiler.name === 'client')));
-app.use(webpackHotServerMiddleware(compiler));
+app.use(webpackServerMiddleware(compiler));
 
 app.listen(6060);
 ```
@@ -148,12 +148,12 @@ if (process.env.NODE_ENV !== 'production') {
     const webpack = require('webpack');
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
-    const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+    const webpackServerMiddleware = require('webpack-server-middleware');
     const config = require('./webpack.config.js');
     const compiler = webpack(config);
     app.use(webpackDevMiddleware(compiler));
     app.use(webpackHotMiddleware(compiler.compilers.find(compiler => compiler.name === 'client')));
-    app.use(webpackHotServerMiddleware(compiler));
+    app.use(webpackServerMiddleware(compiler));
 } else {
     const DIST_DIR = path.join(__dirname, '../dist');
     const SERVER_RENDERER_PATH = path.join(DIST_DIR, 'server.js');
@@ -166,7 +166,3 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.listen(6060);
 ```
-
-## License
-
-MIT
